@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"/>
+       <link rel="stylesheet" type="text/css" href="css.css"/>
+     <style>
+      .addorder{display: none};
+      .availableorder{display: none}
+      </style>
+    </h:head>
+    <h:body>
+<div class="topnav text-light">
+    <a onclick="$('.addorder').css({'display':'block'})">Add Order</a>
+    <a onclick="$('.availableorder').css({'display':'block'})">View Orders</a>
+
+</div>
+
+<div class="content">
+  <h2>CSS Template</h2>
+  <p>A topnav, content and a footer.</p>
+</div>
+
+<div class="footer">
+  <p>All right reserver..</p>
+</div>
+<div class="fixed-top w-100 h-100 bg-trasnparent addorder" style="overflow: auto;background-color: rgba(113,151,184,0.445)">
+    <h:form> <div align="center" class="bg-light m-auto w-25 mt-5 ">
+                <h1 class="bg-success text-light p-2"><i class="pi pi-plus"/> Add order<span onclick="$('.addorder').css({'display':'none'})" class="bg-danger p-1 close" style="width:50px;line-height: 1;margin-top: -2px;height: 50px;float: right;border-radius:50%">&times;</span></h1>
+                #{PController.patience.fname} #{PController.patience.lname}<br/>
+                <label>District</label><br/>
+                <h:selectOneMenu  value="#{PController.location.id}" class="w-25">
+                    <c:forEach items="#{locationdao.allLocations}" var="loc">
+                        <f:selectItem itemLabel="#{loc.district}" itemValue="#{loc.id}"/>
+                    </c:forEach>
+                </h:selectOneMenu><br/>
+
+                <label>Sector</label><br/>
+                <p:inputText value="#{PController.ordders.sector}"/><br/>
+                <label>Cell</label><br/>
+                <p:inputText value="#{PController.ordders.cell}"/><br/>
+                <label>Street</label><br/>
+                <p:inputText value="#{PController.ordders.street}"/><br/>
+                <p:commandButton action="#{PController.saveorder}" value="Order" class="w-100 mt-2 "/>
+            </div>
+    </h:form>
+        </div> 
+ <div class="fixed-top w-100 h-100 bg-trasnparent availableorder" style="overflow: auto;background-color: rgba(113,151,184,0.445)">
+     <div class="col-sm-5 m-auto mt-5" style="overflow: auto">
+     <div class="text-center">
+       <h1 class="bg-dark text-light p-2">Available Orders <span onclick="$('.availableorder').css({'display':'none'})" class="bg-danger p-1 close" style="width:50px;line-height: 0.9;margin-top: -2px;height: 50px;float: right;border-radius:50%">&times;</span></h1> 
+     </div>
+         <p:dataTable value="#{PController.allOrders}" var="pat">
+         <p:column headerText="Name">
+             <p:outputLabel value="#{pat.patiences.fname} #{pat.patiences.lname}"/>
+         </p:column>
+         <p:column headerText="Cell">
+             <p:outputLabel value="#{pat.cell} "/>
+         </p:column>
+         <p:column headerText="Hour">
+             <p:outputLabel value="#{pat.dateoforder} "/>
+         </p:column>
+     </p:dataTable>
+        </div> 
+ </div>
+
+    </h:body>
+</html>
+
